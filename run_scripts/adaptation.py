@@ -72,7 +72,6 @@ if __name__=='__main__':
             ds[name] = dataset
             print(f"Added :{name}, length: {len(ds[name])}")
     
-    # print(dict(Counter(dataset.targets)))
     num_classes = 7      # 7 classes for each domain: 'dog', 'elephant', 'giraffe', 'guitar', 'horse', 'house', 'person'
     classes_names = ['Dog', 'Elephant', 'Giraffe', 'Guitar', 'Horse', 'House', 'Person']
 
@@ -82,6 +81,7 @@ if __name__=='__main__':
     valid_name = 'split'
     test_name = ['cartoon']
 
+    # Arguments
     lr=0.001
     adapt_lrs = [lr, lr/2, lr/4, lr/8, lr/10]
     adapt_lr = adapt_lrs[-1]
@@ -133,8 +133,9 @@ if __name__=='__main__':
         min_valid_loss = 10000
 
         ds_adapt = copy.deepcopy(ds)
-
         optimizer = optim.Adam(net.parameters(), lr=lr)
+
+        # First training
         min_valid_loss = func.train(net, criterion, optimizer, 
                                     train_loader, train_set=new_datasets[0],
                                     valid_loader=valid_loader,
@@ -152,7 +153,7 @@ if __name__=='__main__':
                                     )
 
                 
-        #test model
+        #test baseline model
         acc, min_valid_loss, pseudo_labels, top_pseudo_indeces, actual_labels = func.test_model(net, test_loader, criterion,
                                     wb=False, 
                                     min_valid_loss=min_valid_loss, 
@@ -176,7 +177,7 @@ if __name__=='__main__':
             scalar_means, scalar_stds = None, None
         
         correct = []
-        # print(len(ds_adapt[test_name[0]]))
+
         for idx in range(len(pseudo_labels)):
             if ds_adapt[test_name[0]].targets[idx]==pseudo_labels[idx]:
                 correct.append(pseudo_labels[idx])
@@ -205,6 +206,8 @@ if __name__=='__main__':
         if cf:
             labels = (actual_labels, pseudo_labels)
             plot.make_confusion_matrix(labels, categories=classes_names, model_path=model_path, verbose=verbose)     
+
+        # Second trainings and loops
         for gamma in [0]:
             for distance in distances_[:1]:
                 for n_pseudo_split in [0.5]:

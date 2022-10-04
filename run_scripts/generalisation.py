@@ -81,6 +81,7 @@ if __name__=='__main__':
     valid_name = 'split'
     test_name = ['cartoon']
 
+    # Arguments
     lr=0.001
     adapt_lrs = [lr, lr/2, lr/4, lr/8, lr/10]
     adapt_lr = adapt_lrs[-1]
@@ -105,6 +106,7 @@ if __name__=='__main__':
     delta=1
     scaling = False
 
+    # Training loops
     for i in tqdm(range(runs)):
 
         current_time = now.strftime("%H_%M_%S")
