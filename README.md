@@ -1,5 +1,8 @@
-# Thesis
-Invariant Domain Adaptation graduation project for TNO: Intelligent Imaging
+# Multi-domain invariant learning with embedding alignment
+Graduation project for TNO: Intelligent Imaging.
+
+Final report and NeurIPS workshop submission available under reports.
+
 
 ## Instructions
 
