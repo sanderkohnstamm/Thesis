@@ -1,7 +1,8 @@
 # Thesis
 Invariant Domain Adaptation graduation project for TNO: Intelligent Imaging
 
-##Instructions
+## Instructions
+
 create data folder next to thesis
 
 cd data
